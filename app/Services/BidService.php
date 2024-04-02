@@ -56,6 +56,7 @@ class BidService
         }
     }
 
+    //select campaign 
     private function selectCampaign(array $eligibleCampaigns)
     {
         usort($eligibleCampaigns, function ($a, $b) {
@@ -65,6 +66,7 @@ class BidService
         return $eligibleCampaigns[0];
     }
 
+    //return response as format
     private function generateCampaignResponse(array $selectedCampaign)
     {
         return [
