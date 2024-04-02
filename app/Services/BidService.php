@@ -56,7 +56,7 @@ class BidService
         }
     }
 
-    //select campaign 
+    //select campaign
     private function selectCampaign(array $eligibleCampaigns)
     {
         usort($eligibleCampaigns, function ($a, $b) {

@@ -8,7 +8,6 @@ use App\Http\Requests\Api\UserRegisterRequest;
 use App\Models\User;
 use App\Traits\ApiManage;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,17 +18,17 @@ class AuthController extends Controller
     public function register(UserRegisterRequest $request)
     {
         try {
-            User::create([
+            $user = User::create([
                 'email' => $request->email,
                 'name' => $request->email,
                 'password' => Hash::make($request->password),
                 'phone_number' => $request->phone_number,
             ]);
 
-            return $this->apiResponse(1, 'User created successfully');
+            return $this->successResponse($user, 'User created successfully');
         } catch (Exception $e) {
 
-            return $this->apiResponse(0, $e->getMessage());
+            return $this->errorResponse($e->getMessage());
         }
     }
 
@@ -42,20 +41,10 @@ class AuthController extends Controller
             $user = User::find(Auth::user()->id);
             $data['token'] = $user->createToken($user->email)->plainTextToken;
 
-            return $this->apiResponse(1, 'Successfully Logged In ', $data);
+            return $this->successResponse($data, 'Successfully Logged In ');
         } else {
 
-            return $this->apiResponse(0, 'User Login failed');
+            return $this->errorResponse('User Login failed');
         }
-    }
-
-    public function logout(Request $request)
-    {
-
-        $request->user()->tokens()->delete();
-
-        Auth::guard('user')->logout();
-
-        return $this->apiResponse(1, 'Successfully Logged Out');
     }
 }

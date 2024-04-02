@@ -19,7 +19,6 @@ Route::controller(AuthController::class)->group(function () {
 
     Route::post('/register', 'register')->middleware('throttle:10,1');
     Route::post('/login', 'login')->middleware('throttle:10,1');
-    Route::post('/logout', 'logout');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

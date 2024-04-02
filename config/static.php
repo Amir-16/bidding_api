@@ -52,7 +52,6 @@ $jsonData = '[
 
 $campaign = json_decode($jsonData, true);
 
-
 $sampleBidRequest1 = '{
     "id": "myB92gUhMdC5DUxndq3yAg",
     "imp": [
