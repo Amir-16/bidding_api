@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BidController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::controller(AuthController::class)->group(function () {
 
-Route::get('/test', [BidController::class, 'index']);
+    Route::post('/register', 'register')->middleware('throttle:10,1');
+    Route::post('/login', 'login')->middleware('throttle:10,1');
+    Route::post('/logout', 'logout');
+});
 
-Route::post('/bid', [BidController::class, 'handleBidRequest']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/bid', [BidController::class, 'handleBidRequest']);
+
+});
