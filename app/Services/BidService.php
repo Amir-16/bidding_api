@@ -24,7 +24,6 @@ class BidService
 
             return $this->errorResponse('Invalid bid request parameters', 422);
         }
-
         // Extract bid request parameters
         $device = $bidRequest['device']['make'].' '.$bidRequest['device']['model'];
         $country = $bidRequest['app']['publisher']['ext']['country'];
@@ -36,7 +35,7 @@ class BidService
         $eligibleCampaigns = [];
         foreach ($campaigns as $campaign) {
             if (
-                strpos($campaign['hs_os'], $bidRequest['device']['os']) !== false &&
+                strpos(strtolower($campaign['hs_os']), $bidRequest['device']['os']) !== false &&
                 strpos($campaign['country'], $country) !== false &&
                 $campaign['price'] >= $bidFloor &&
                 $campaign['dimension'] == $adFormat

@@ -18,12 +18,13 @@ class BidController extends Controller
     {
         $bidRequestJson = config('static.bidRequest');
 
-        $campaigns = config('static.campaign');
+        $campaigns = config('static.campaign1');  //given campaign
+
+        //$campaigns = config('static.campaign2');  // test campaign found response 
 
         $response = $this->bidService->bidRequestProcess($bidRequestJson, $campaigns);
 
         return $response;
-
     }
     // {
     //     $jsonData = '[{
